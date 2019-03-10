@@ -1,0 +1,48 @@
+.swal-modal {
+    background-color:#32323e;
+    border-radius: 50px
+  }
+
+body{
+ background-color: transparent
+ 
+}
+
+.object {
+  animation: MoveUpDown 1s linear infinite;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+img {
+  -webkit-animation: mover 2s infinite  alternate;
+  animation: mover 3s infinite  alternate;
+  padding-top: 17%
+}
+@-webkit-keyframes mover {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-20px); }
+}
+
+#titlebar{
+  -webkit-app-region: drag;
+  padding-top: 17
+}
+
+#h{
+  color:blac;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
+  font-size: 80px;
+  align-content: center
+}
+
+#sidecolumn{
+  background-color:#f5f5f5;
+  padding-top: 353.5px
+}
+
