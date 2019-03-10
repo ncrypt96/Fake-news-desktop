@@ -5,16 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
 
 </head>
 <body>
     <div id="titlebar">
         
     </div>
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid" id="mainPage">
+        <div class="row" >
             <div class="col-6" id="sidecolumn">
 
                             
@@ -22,18 +24,44 @@
                             <h1 id="h">DETECT FAKE NEWS</h1>
                             <hr class="my-4">
                             <p class="lead">This project compares the given news article with other sources for checking the authenticity of the article</p>
+
+                            <div class="input-group input-group-lg">
+
+                                    <input type="text" id="iplink" class="form-control" aria-label="Sizing example input" style="border-radius: 50px" aria-describedby="inputGroup-sizing-lg" placeholder="Enter the Url">
+                                    <div style="padding-left: 10px;"></div>
+                                    <button  id="mainButton" class="btn-hover color-3"> <i class="fas fa-search"></i></button>
+                            </div>
+                                  
                             <input id="ip" type="text">
                             <button id="btn">click me</button>
                             <button id="btn2">open modal</button>
                             <button id="btn3">swal2</button>
+                            <div id="q"><canvas id="chart" ></canvas></div>
+                            <button id="show"> shows</button>
+
+                            
+
                             
 
             </div>
-            <div class="col-6">
+            <div class="col-6" id="rightcolumn">
                     <img class="img align-middle" alt="Responsive image" src="../images/side.svg" alt="" srcset="">
             </div>
         </div>
+        
     </div>
+
+    <div class="container-fluid" id="dashboard">
+            <div class="row" >
+                    <div class="col-4">
+                            <canvas id="chart2" width="100" height="100"></canvas>
+                        </div>
+                    <div class="col-4">hjghj</div>
+                    <div class="col-4">hjghj</div>
+            </div>
+    </div>
+
+
   
 
 </body>

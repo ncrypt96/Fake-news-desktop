@@ -15,6 +15,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^8.2.6"
+    "sweetalert2": "^8.2.6",
+    "valid-url": "^1.0.9"
   }
 }
