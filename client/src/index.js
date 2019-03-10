@@ -2,6 +2,8 @@ const axios = require('axios')
 const swal = require('sweetalert')
 const Swal = require('sweetalert2')
 const validUrl = require('valid-url')
+const {extract } = require('article-parser');
+const remote = require('electron').remote;
 
 const h = document.getElementById("h")
 const ip = document.getElementById("ip")
@@ -12,6 +14,9 @@ const iplink = document.getElementById('iplink')
 const mainButton = document.getElementById('mainButton')
 const mainPage = document.getElementById('mainPage')
 const dashboard = document.getElementById('dashboard')
+const newsImage = document.getElementById('news-image')
+const title = document.getElementById('news-title')
+const reloadButton =document.getElementById('reload')
 
 dashboard.style.display = 'none'
 
@@ -126,7 +131,7 @@ iplink.addEventListener('click',(event)=>{
 mainButton.addEventListener('click',(event)=>{
     
     if (validUrl.isUri(iplink.value)){
-        axios.post('http://d5ad6a7c.ngrok.io/api/without',{
+        axios.post('http://49c62341.ngrok.io/api/without',{
             "users_link":iplink.value
         }).then((response)=>{
             console.log(response);
@@ -136,6 +141,29 @@ mainButton.addEventListener('click',(event)=>{
                 mainPage.style.display ='none'
                 
                 dashboard.style.display = 'block'
+
+                //update image
+                if(response.data['top_img_URL']!=''){
+                    newsImage.src = response.data['top_img_URL']
+                }else{
+                    extract(response.data["users_link"]).then((article) => {
+                        newsImage.src = article['image'];
+                    
+                      }).catch((err) => {
+                        console.log(err);
+                      });
+                }
+                
+                 
+
+                //update image
+
+                //update title
+
+                title.innerText = response.data['titles'][0]
+
+                //update title
+
                 var bar_ctx = document.getElementById('chart2').getContext('2d');
 
                 var purple_orange_gradient = bar_ctx.createLinearGradient(0, 0, 0, 600);
@@ -193,7 +221,7 @@ mainButton.addEventListener('click',(event)=>{
                     input:'text'
                 }).then((event)=>{
                     console.log(event.value.split(","))
-                    axios.post('http://d5ad6a7c.ngrok.io/api/with',{
+                    axios.post('http://49c62341.ngrok.io/api/with',{
                         "users_link":response.data['user_link'],
                         "keywords":event.value.split(",")
                     }).then((res)=>{
@@ -325,4 +353,11 @@ const show = document.getElementById('show')
 show.addEventListener('click',(event)=>{
     console.log('kkkkkkkkkkkkkkkkkkkk')
     q.style.display ='none'
+})
+
+
+reloadButton.addEventListener('click',(event)=>{
+
+    remote.getCurrentWindow().reload()
+
 })
