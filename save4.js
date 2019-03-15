@@ -5,11 +5,9 @@ const validUrl = require('valid-url')
 const {extract } = require('article-parser');
 const remote = require('electron').remote;
 const fs = require('fs')
-const { shell } = require('electron')
 
 
 //axios
-axios.defaults.timeout = 1000*6000;
 
 
 
@@ -23,13 +21,12 @@ const reloadButton =document.getElementById('reload')
 const newsDescription = document.getElementById('news-description')
 const simValue = document.getElementById('sim-value')
 const classificationValue = document.getElementById('classification')
-const getSourcesButton = document.getElementById('get-sources')
 
 
 //set server location
 let serverLocation= fs.readFileSync(require('path').join(require('os').homedir(), 'Desktop/config.txt'), 'utf8')
 
-let sourcesArray;
+
 
 //ui close minimize
 
@@ -76,18 +73,9 @@ mainButton.addEventListener('click',(event)=>{
             type: 'success',
             title: 'Now searching for relevent articles'
           })
-
-          axios({
-
-            method:'post',
-            url:serverLocation+'/api/without',
-            timeout:1000*6000,
-            headers:{
-                "Content-Type":"application/json"
-            },data:{
-                "users_link":iplink.value.trim()
-            }
-          }).then((response)=>{
+        axios.post(serverLocation+'/api/without',{
+            "users_link":iplink.value.trim()
+        }).then((response)=>{
             console.log(response);
             iplink.value = ''
             
@@ -108,8 +96,6 @@ mainButton.addEventListener('click',(event)=>{
                       });
                 }
                 
-                //open sources
-                sourcesArray = response.data['api_news_urls']
                  
 
                 //update image
@@ -267,17 +253,9 @@ mainButton.addEventListener('click',(event)=>{
                     input:'text'
                 }).then((event)=>{
                     console.log(event.value.split(","))
-
-                    axios({
-                        method:'post',
-                        url: serverLocation+'/api/with',
-                        timeout:1000*6000,
-                        headers:{
-                            "Content-Type":"application/json"
-                        },data:{
-                            "users_link":response.data['user_link'],
-                            "keywords":event.value.split(",")
-                        }
+                    axios.post(serverLocation+'/api/with',{
+                        "users_link":response.data['user_link'],
+                        "keywords":event.value.split(",")
                     }).then((res)=>{
                         console.log(res)
                         mainPage.style.display ='none'
@@ -295,99 +273,6 @@ mainButton.addEventListener('click',(event)=>{
                                 console.log(err);
                             });
                         }
-
-                        sourcesArray = res.data['api_news_urls']
-                        
-
-                        //update image
-
-                        //update similarity
-                        
-                        let simScores = res.data['similarity']
-
-                        let status;
-                        let score=0;
-
-                        for(let i=0;i<simScores.length;i++){
-
-                            
-                            if(simScores[i]>=0.7){
-                                console.log("gfhjgghjgh")
-                            status = true;
-                            break;
-                            }else{
-
-                                status = false;
-                            }
-                        }
-
-                        console.log(status)
-
-                        if(status==true){
-
-                            let largest =0;
-
-                            for(let i = 0;i<simScores.length;i++){
-
-                                if(simScores[i]>largest){
-
-                                    largest = simScores[i]
-
-                                }
-                            }
-
-                            score = largest
-
-                        
-                        }else{
-                        
-                        
-                            for(let i=0;i<simScores.length;i++){
-                        
-                            score = score + simScores[i]
-                        
-                            }
-                        
-                            score = score/simScores.length
-                        
-                        }
-
-                        //simValue.innerText = 100- Math.round(score * 100).toString() + "%"
-                        
-
-                        //update similarity
-                        
-                        let result;
-
-                        //update classification
-
-                        if(Math.round(score * 100)<=40){
-
-                            classificationValue.innerText = "FAKE"
-                            result = 'FAKE'
-
-                        }else{
-
-                            classificationValue.innerText = "REAL"
-
-                            result = "REAL"
-
-                        }
-
-                        // assign confidence
-                        if(result=="REAL"){
-
-                            simValue.innerText =  Math.round(score * 100).toString() + "%"
-                        }else{
-                            simValue.innerText = (100- Math.round(score * 100)).toString() + "%"
-                        }
-
-                        if(res.data['similarity'].length==0){
-
-                            classificationValue.innerText= "FAKE"
-                        }
-
-                        
                     
                         //update image
 
@@ -528,16 +413,6 @@ mainButton.addEventListener('click',(event)=>{
 
 reloadButton.addEventListener('click',(event)=>{
 
-    console.log("reloading")
     remote.getCurrentWindow().reload()
 
-})
-
-
-getSourcesButton.addEventListener('click',(event)=>{
-
-    for(let i=0;i<sourcesArray.length;i++){
-        shell.openExternal(sourcesArray[i])
-    }
-    
 })
