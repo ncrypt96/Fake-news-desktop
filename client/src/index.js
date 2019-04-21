@@ -8,6 +8,11 @@ const fs = require('fs')
 const { shell } = require('electron')
 
 
+const httpClient = axios.create();
+httpClient.defaults.timeout = 1000*6000;
+
+
+
 //axios
 axios.defaults.timeout = 1000*6000;
 
@@ -77,7 +82,9 @@ mainButton.addEventListener('click',(event)=>{
             title: 'Now searching for relevent articles'
           })
 
-          axios({
+          axios.defaults.timeout = 1000*6000;
+
+          httpClient({
 
             method:'post',
             url:serverLocation+'/api/without',
@@ -268,7 +275,8 @@ mainButton.addEventListener('click',(event)=>{
                 }).then((event)=>{
                     console.log(event.value.split(","))
 
-                    axios({
+                    axios.defaults.timeout = 1000*6000;
+                    httpClient({
                         method:'post',
                         url: serverLocation+'/api/with',
                         timeout:1000*6000,
