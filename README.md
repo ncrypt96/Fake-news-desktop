@@ -6,7 +6,7 @@ Made with Electronjs and Bootstrap
 
 # Installation
 
->  git clone [https://github.com/ncrypt96/facet](https://github.com/ncrypt96/facet)
+>  git clone [https://github.com/ncrypt96/Fake-news-desktop](https://github.com/ncrypt96/Fake-news-desktop)
 >  cd client
 >  npm install
 >  electron .
