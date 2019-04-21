@@ -6,9 +6,9 @@ Made with Electronjs and Bootstrap
 
 # Installation
 
->  git clone [https://github.com/ncrypt96/Fake-news-desktop](https://github.com/ncrypt96/Fake-news-desktop)
->  cd client
->  npm install
+>  git clone [https://github.com/ncrypt96/Fake-news-desktop](https://github.com/ncrypt96/Fake-news-desktop)<br>
+>  cd client <br>
+>  npm install <br>
 >  electron .
 
 ####  Create a file config.txt on the Desktop and add the URL to listen to
